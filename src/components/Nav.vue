@@ -29,7 +29,7 @@
 <style lang="scss" scoped>
     nav {
         box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.12);
-        background: #d6e6f2;
+        background: $tint-blue;
         display: flex;
 
         > .item {
@@ -46,11 +46,11 @@
             }
 
             &.selected {
-                background: #769fcd;
-                color: #f7fbfc;
+                background: $mid-blue;
+                color: $white;
 
                 .icon {
-                    fill: #f7fbfc;
+                    fill: $white;
                 }
             }
         }
