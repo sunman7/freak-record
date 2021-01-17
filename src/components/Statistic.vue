@@ -7,7 +7,7 @@
     import {Component} from "vue-property-decorator";
 
     @Component
-    export default class Types extends Vue {
+    export default class Statistic extends Vue {
 
     }
 </script>

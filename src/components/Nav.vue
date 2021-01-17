@@ -1,5 +1,5 @@
 <template>
-    <div>label</div>
+    <div>asd</div>
 </template>
 
 <script lang="ts">
@@ -7,7 +7,7 @@
     import {Component} from "vue-property-decorator";
 
     @Component
-    export default class Label extends Vue {
+    export default class Nav extends Vue {
 
     }
 </script>
