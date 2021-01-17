@@ -3,6 +3,7 @@ import VueRouter, {RouteConfig} from "vue-router";
 import Record from "@/components/Record.vue";
 import Label from "@/components/Label.vue";
 import Statistic from "@/components/Statistic.vue";
+import NotFound from "@/components/NotFound.vue";
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,10 @@ const routes: Array<RouteConfig> = [
     {
         path: "/statistic",
         component: Statistic
+    },
+    {
+        path: "*",
+        component: NotFound
     },
 ];
 

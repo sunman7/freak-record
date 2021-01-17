@@ -1,5 +1,5 @@
 <template>
-    <div>statistic</div>
+    <div>asd<Nav /></div>
 </template>
 
 <script lang="ts">
