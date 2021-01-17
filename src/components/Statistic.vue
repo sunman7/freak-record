@@ -1,5 +1,7 @@
 <template>
-    <div>asd<Nav /></div>
+    <Layout>
+        哈哈
+    </Layout>
 </template>
 
 <script lang="ts">
