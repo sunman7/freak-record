@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <Type  />
-        <Tag/>
+        <Tag :value.sync="tags"/>
         <Note/>
         <NumberPad/>
     </div>
@@ -19,7 +19,7 @@
         components: {Tag, Type, Note, NumberPad}
     })
     export default class Record extends Vue {
-
+        tags = ["1","2"]
 
     }
 </script>
