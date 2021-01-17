@@ -27,10 +27,15 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "~@/style/helper.scss";
+
     nav {
-        box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.12);
-        background: $tint-blue;
+        box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.15);
+        background: white;
+        color: $orange;
         display: flex;
+        font-size: 14px;
+
 
         > .item {
             padding: 4px 0;
@@ -41,16 +46,16 @@
             flex-direction: column;
 
             .icon {
-                height: 32px;
-                width: 32px;
+                height: 24px;
+                width: 24px;
+                fill: $orange;
             }
 
             &.selected {
-                background: $mid-blue;
-                color: $white;
+                color: darken($orange,35%);
 
                 .icon {
-                    fill: $white;
+                    fill: darken($orange,30%);
                 }
             }
         }
