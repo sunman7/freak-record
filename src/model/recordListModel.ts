@@ -1,5 +1,5 @@
 const keyName = "recordList";
-const model = {
+const recordListModel = {
     clone(data: RecordType[] | RecordType) {
         return JSON.parse(JSON.stringify(data));
     },
@@ -10,4 +10,4 @@ const model = {
         window.localStorage.setItem(keyName, JSON.stringify(data));
     }
 };
-export default model;
+export default recordListModel;

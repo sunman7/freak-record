@@ -1,6 +1,5 @@
 <template>
     <div class="wrapper">
-        {{recordList}}
         <Type :value="record.type" @update:value="updateType"/>
         <Tag :value="record.tags" @update:value="updateTags"/>
         <Note :value="record.note" @update:value="updateNote"/>
@@ -15,7 +14,8 @@
     import Note from "@/components/Note.vue";
     import Type from "@/components/Type.vue";
     import Tag from "@/components/Tag.vue";
-    import model from "@/model";
+    import recordListModel from "@/model/recordListModel";
+    import tagListModel from "@/model/tagListModel";
 
 
     localStorage.setItem("version", "0.0.1");
@@ -24,6 +24,7 @@
         components: {Tag, Type, Note, NumberPad}
     })
     export default class Record extends Vue {
+        tags = tagListModel.init();
         record: RecordType = {
             tags: [],
             note: "",
@@ -31,7 +32,7 @@
             amount: 0,
             createTime: new Date(),
         };
-        recordList = model.init();
+        recordList = recordListModel.init();
 
         updateTags(tags: string[]) {
             this.record.tags = tags;
@@ -50,14 +51,14 @@
         }
 
         saveRecord() {
-            const deepClone: RecordType = model.clone(this.record);
+            const deepClone: RecordType = recordListModel.clone(this.record);
             deepClone.createTime = new Date();
             this.recordList.push(deepClone);
         }
 
         @Watch("recordList")
         onRecordListChanged() {
-            model.save(this.recordList);
+            recordListModel.save(this.recordList);
         }
 
     }
