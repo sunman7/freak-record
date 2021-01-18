@@ -4,7 +4,8 @@ import Record from "@/components/Record.vue";
 import Label from "@/components/Label.vue";
 import Statistic from "@/components/Statistic.vue";
 import NotFound from "@/components/NotFound.vue";
-import NewTag from "@/components/NewTag.vue";
+import NewTag from "@/components/EditLabel.vue";
+import EditLabel from "@/components/EditLabel.vue";
 
 Vue.use(VueRouter);
 
@@ -25,8 +26,8 @@ const routes: Array<RouteConfig> = [
         component: Statistic
     },
     {
-        path: "/newTag",
-        component: NewTag
+        path: "/label/editLabel",
+        component: EditLabel
     },
     {
         path: "*",

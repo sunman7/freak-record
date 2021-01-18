@@ -1,5 +1,7 @@
 <template>
-    <div></div>
+    <Layout>
+
+    </Layout>
 </template>
 
 <script lang="ts">
@@ -7,7 +9,7 @@
     import {Component} from "vue-property-decorator";
 
     @Component
-    export default class NewTag extends Vue {
+    export default class EditLabel extends Vue {
 
     }
 </script>

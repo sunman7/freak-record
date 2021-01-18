@@ -1,7 +1,11 @@
 const keyName = "tagList";
+type Tag = {
+    id: string;
+    name: string;
+}
 type TagListModel = {
-    data: string[];
-    init: () => string[];
+    data: Tag[];
+    init: () => Tag[];
     create: (name: string) => "success" | "duplicated";
     save: () => void;
 }
@@ -12,10 +16,11 @@ const tagListModel: TagListModel = {
         return this.data;
     },
     create(name: string) {
-        if (this.data.indexOf(name) >= 0) {
+        const names = this.data.map(tag => tag.name);
+        if (names.indexOf(name) >= 0) {
             return "duplicated";
         }
-        this.data.push(name);
+        this.data.push({id: name, name: name});
         this.save();
         return "success";
     },
