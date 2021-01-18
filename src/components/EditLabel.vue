@@ -1,6 +1,9 @@
 <template>
     <Layout>
-
+        <div>
+            <Back />
+            <span>编辑标签</span>
+        </div>
     </Layout>
 </template>
 
@@ -28,5 +31,7 @@
 </script>
 
 <style lang="scss" scoped>
+    div{
 
+    }
 </style>

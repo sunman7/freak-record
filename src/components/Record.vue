@@ -2,7 +2,7 @@
     <div class="wrapper">
         <Type :value="record.type" @update:value="updateType"/>
         <Tag :value="record.tags" @update:value="updateTags"/>
-        <Note :value="record.note" @update:value="updateNote"/>
+        <Note :file-name="备注" placeholder="记得在这儿输入备注哦~" :value="record.note" @update:value="updateNote"/>
         <NumberPad :value="record.amount" @update:value="updateAmount" @confirm="saveRecord"/>
     </div>
 </template>

@@ -1,11 +1,11 @@
 <template>
     <Layout>
-        <ol class="tags">
-            <li v-for="tag in tags" :key="tag.id">
+        <div class="tags">
+            <router-link class="tag" v-for="tag in tags" :key="tag.id" :to="`/label/edit/${tag.id}`">
                 <span>{{tag.name}}</span>
                 <Icon name="edit"/>
-            </li>
-        </ol>
+            </router-link>
+        </div>
         <div class="new-tag-wrapper">
             <button class="new-tag" @click="createTag">新增标签</button>
         </div>
@@ -21,6 +21,7 @@
     @Component
     export default class Label extends Vue {
         tags = tagListModel.data;
+
         createTag() {
             const name = window.prompt("请输入标签名");
             if (name) {
@@ -43,7 +44,7 @@
         background: #f5f5f5;
         padding: 0 16px;
 
-        > li {
+        > .tag {
             min-height: 44px;
             display: flex;
             align-items: center;
