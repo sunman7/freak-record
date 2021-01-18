@@ -10,22 +10,16 @@
 
 <script lang="ts">
     import Vue from "vue";
-    import {Component, Prop, Watch} from "vue-property-decorator";
+    import {Component, Watch} from "vue-property-decorator";
     import NumberPad from "@/components/NumberPad.vue";
     import Note from "@/components/Note.vue";
     import Type from "@/components/Type.vue";
     import Tag from "@/components/Tag.vue";
+    import model from "@/model";
+
 
     localStorage.setItem("version", "0.0.1");
 
-    type RecordType = {
-        tags: string[];
-        note: string;
-        type: string;
-        amount: number;
-        createTime: Date;
-
-    }
     @Component({
         components: {Tag, Type, Note, NumberPad}
     })
@@ -37,7 +31,7 @@
             amount: 0,
             createTime: new Date(),
         };
-        recordList: RecordType[] = JSON.parse(window.localStorage.getItem("recordList") || "[]");
+        recordList = model.init();
 
         updateTags(tags: string[]) {
             this.record.tags = tags;
@@ -56,14 +50,14 @@
         }
 
         saveRecord() {
-            const deepClone: RecordType = JSON.parse(JSON.stringify(this.record));
+            const deepClone: RecordType = model.clone(this.record);
             deepClone.createTime = new Date();
             this.recordList.push(deepClone);
         }
 
         @Watch("recordList")
         onRecordListChanged() {
-            window.localStorage.setItem("recordList", JSON.stringify(this.recordList));
+            model.save(this.recordList);
         }
 
     }
