@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        {{record}}
+        {{recordList}}
         <Type :value="record.type" @update:value="updateType"/>
         <Tag :value="record.tags" @update:value="updateTags"/>
         <Note :value="record.note" @update:value="updateNote"/>
@@ -16,25 +16,28 @@
     import Type from "@/components/Type.vue";
     import Tag from "@/components/Tag.vue";
 
+    localStorage.setItem("version", "0.0.1");
+
     type RecordType = {
         tags: string[];
         note: string;
         type: string;
         amount: number;
+        createTime: Date;
 
     }
     @Component({
         components: {Tag, Type, Note, NumberPad}
     })
     export default class Record extends Vue {
-        tags = ["1", "2"];
         record: RecordType = {
             tags: [],
             note: "",
             type: "-",
             amount: 0,
+            createTime: new Date(),
         };
-        recordList: RecordType[] = [];
+        recordList: RecordType[] = JSON.parse(window.localStorage.getItem("recordList") || "[]");
 
         updateTags(tags: string[]) {
             this.record.tags = tags;
@@ -53,7 +56,8 @@
         }
 
         saveRecord() {
-            const deepClone = JSON.parse(JSON.stringify(this.record));
+            const deepClone: RecordType = JSON.parse(JSON.stringify(this.record));
+            deepClone.createTime = new Date();
             this.recordList.push(deepClone);
         }
 

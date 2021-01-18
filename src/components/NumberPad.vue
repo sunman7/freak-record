@@ -60,6 +60,7 @@
         confirm() {
             this.$emit("update:value", parseFloat(this.output));
             this.$emit("confirm", parseFloat(this.output));
+            this.output = "0";
         }
 
         clear() {
