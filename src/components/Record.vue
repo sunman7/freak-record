@@ -11,7 +11,7 @@
     import Vue from "vue";
     import {Component, Watch} from "vue-property-decorator";
     import NumberPad from "@/components/NumberPad.vue";
-    import Note from "@/components/Note.vue";
+    import FormItem from "@/components/FormItem.vue";
     import Type from "@/components/Type.vue";
     import Tag from "@/components/Tag.vue";
     import recordListModel from "@/model/recordListModel";
@@ -21,7 +21,7 @@
     localStorage.setItem("version", "0.0.1");
 
     @Component({
-        components: {Tag, Type, Note, NumberPad}
+        components: {Tag, Type, Note: FormItem, NumberPad}
     })
     export default class Record extends Vue {
         tags = tagListModel.init();
