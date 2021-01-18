@@ -1,8 +1,6 @@
 <template>
     <section>
-        <router-link to="/">
-            <Icon class="icon" name="left"/>
-        </router-link>
+        <Back />
         <ul class="type">
             <li :class="value === '-' && 'selected'" @click="selectType('-')">支出</li>
             <li :class="value === '+' && 'selected'" @click="selectType('+')">收入</li>
