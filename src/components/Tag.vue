@@ -2,13 +2,16 @@
     <section class="tags">
         <ol class="current">
             <li v-for="tag in value" :key="tag" @click="select(tag)"
-                :class="selectedTags.indexOf(tag) >= 0 && 'selected'">
+                :class="selectedTags.indexOf(tag) >= 0 && 'selected'" >
                 <div class="icon-wrapper">
                     {{tag}}
                 </div>
             </li>
+            <li>
+                <button class="add" @click="create">新增</button>
+            </li>
         </ol>
-        <button class="add" @click="create">新增</button>
+
 
     </section>
 </template>
@@ -56,6 +59,16 @@
             display: flex;
 
             > li {
+                > .add {
+                    background: $orange;
+                    width: 90px;
+                    border: 1px solid #d3d3d3;
+                    border-radius: 12px;
+                    height: 50px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
 
                 > .icon-wrapper {
                     background: $white;
@@ -84,17 +97,6 @@
 
         }
 
-        > .add {
-            background: $orange;
-            margin-top: 10px;
-            width: 90px;
-            border: 1px solid #d3d3d3;
-            border-radius: 12px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
 
     }
 

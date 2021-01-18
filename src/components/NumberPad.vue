@@ -24,11 +24,12 @@
 
 <script lang="ts">
     import Vue from "vue";
-    import {Component} from "vue-property-decorator";
+    import {Component, Prop, Watch} from "vue-property-decorator";
 
     @Component
     export default class NumberPad extends Vue {
-        output = "";
+        @Prop() value!: number;
+        output = this.value.toString();
 
         joint(event: MouseEvent) {
             if (event.target) {
@@ -57,12 +58,14 @@
         }
 
         confirm() {
-            return ;
+            this.$emit("update:value", parseFloat(this.output));
+            this.$emit("confirm", parseFloat(this.output));
         }
 
         clear() {
             this.output = "";
         }
+
     }
 </script>
 
