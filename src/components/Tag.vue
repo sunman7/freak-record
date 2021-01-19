@@ -1,10 +1,10 @@
 <template>
     <section class="tags">
         <ol class="current">
-            <li v-for="tag in value" :key="tag" @click="select(tag)"
+            <li v-for="tag in value" :key="tag.id" @click="select(tag)"
                 :class="selectedTags.indexOf(tag) >= 0 && 'selected'" >
                 <div class="icon-wrapper">
-                    {{tag}}
+                    {{tag.name}}
                 </div>
             </li>
             <li>

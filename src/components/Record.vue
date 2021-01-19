@@ -2,7 +2,7 @@
     <div class="wrapper">
         <Type :value="record.type" @update:value="updateType"/>
         <Tag :value="record.tags" @update:value="updateTags"/>
-        <Note :file-name="备注" placeholder="记得在这儿输入备注哦~" :value="record.note" @update:value="updateNote"/>
+        <FormItem file-name="备注" placeholder="记得在这儿输入备注哦~" :value="record.note" @update:value="updateNote"/>
         <NumberPad :value="record.amount" @update:value="updateAmount" @confirm="saveRecord"/>
     </div>
 </template>
@@ -21,7 +21,7 @@
     localStorage.setItem("version", "0.0.1");
 
     @Component({
-        components: {Tag, Type, Note: FormItem, NumberPad}
+        components: {Tag, Type, FormItem, NumberPad}
     })
     export default class Record extends Vue {
         tags = tagListModel.init();

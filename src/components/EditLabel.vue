@@ -1,12 +1,12 @@
 <template>
     <Layout>
         <div class="wrapper">
-            <Back/>
+            <Icon name="left" @click.native="$router.replace('/label')"/>
             <span>编辑标签</span>
         </div>
-        <FormItem class="input" file-name="标签名" placeholder="清在这儿输入新的标签名"/>
+        <FormItem class="input" file-name="标签名" placeholder="清在这儿输入新的标签名" :value="tag.name" @update:value="updateTag"/>
         <div class="button-wrapper">
-            <Button>删除标签</Button>
+            <Button @click.native="remove">删除标签</Button>
         </div>
     </Layout>
 </template>
@@ -22,19 +22,35 @@
         components: {Button, FormItem}
     })
     export default class EditLabel extends Vue {
+        tag?: { id: string; name: string } = undefined;
+
         created() {
             const id = this.$route.params.id;
             tagListModel.init();
             const tags = tagListModel.data;
             const tag = tags.filter(t => t.id === id)[0];
             if (tag) {
-                console.log(tag);
+                this.tag = tag;
             } else {
                 this.$router.replace("/404");
             }
-
-
         }
+
+        updateTag(name: string) {
+            if (this.tag) {
+                tagListModel.update(this.tag.id, name);
+            }
+        }
+
+        remove() {
+            console.log("1");
+            if (this.tag) {
+                tagListModel.remove(this.tag.id);
+                window.alert("删除成功");
+                this.$router.replace("/label");
+            }
+        }
+
     }
 </script>
 
@@ -46,12 +62,21 @@
         justify-content: center;
         align-items: center;
         line-height: 64px;
+        > .icon {
+            background: transparent;
+            position: absolute;
+            top: 16px;
+            left: 10px;
+        }
+
     }
+
 
     .input {
         margin: 12px 0;
     }
-    .button-wrapper{
+
+    .button-wrapper {
         text-align: center;
     }
 </style>

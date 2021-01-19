@@ -1,8 +1,8 @@
 <template>
 
     <section class="note">
-        <label class="name">备注：</label>
-        <input type="text" v-model="value" :placeholder="placeholder">
+        <label class="name">{{fileName}}</label>
+        <input type="text" :value="value" @input="onValueChanged($event.target.value)" :placeholder="placeholder">
 
     </section>
 </template>
@@ -12,7 +12,7 @@
     import {Component, Prop, Watch} from "vue-property-decorator";
 
     @Component
-    export default class Note extends Vue {
+    export default class FormItem extends Vue {
         @Prop() value!: string;
 
         @Prop({required: true}) fileName!: string;
