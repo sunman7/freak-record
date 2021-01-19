@@ -19,7 +19,7 @@
 <script lang="ts">
     import Vue from "vue";
     import {Component, Prop} from "vue-property-decorator";
-    import tagListModel from "@/model/tagListModel";
+    import tagStore from "@/store/tagStore";
 
 
     @Component
@@ -39,7 +39,7 @@
         create() {
             const name = window.prompt("请输入标签名");
             if (name) {
-                const msg = tagListModel.create(name);
+                const msg = tagStore.createTag(name);
                 if (msg === "duplicated") {
                     window.alert("标签已经存在了，请重新添加");
                 } else if (msg === "success") {
@@ -68,6 +68,7 @@
 
             > li {
                 margin-top: 10px;
+
                 > .add {
                     background: $orange;
                     width: 90px;
