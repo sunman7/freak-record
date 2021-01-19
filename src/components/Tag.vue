@@ -1,8 +1,8 @@
 <template>
     <section class="tags">
         <ol class="current">
-            <li v-for="tag in value" :key="tag.id" @click="select(tag)"
-                :class="selectedTags.indexOf(tag) >= 0 && 'selected'" >
+            <li v-for="tag in value" :key="tag.id" @click="select(tag.id)"
+                :class="selectedTags.indexOf(tag.id) >= 0 && 'selected'">
                 <div class="icon-wrapper">
                     {{tag.name}}
                 </div>
@@ -19,10 +19,13 @@
 <script lang="ts">
     import Vue from "vue";
     import {Component, Prop} from "vue-property-decorator";
+    import newId from "@/lib/newId";
+    import tagListModel from "@/model/tagListModel";
+
 
     @Component
     export default class Tag extends Vue {
-        @Prop(Array) value: string[] | undefined;
+        @Prop() readonly value: { id: string; name: string }[] | undefined;
         selectedTags: string[] = [];
 
         select(tag: string) {
@@ -35,12 +38,16 @@
         }
 
         create() {
-            const input = window.prompt("请输入标签名");
-            if (input === "") {
-                window.alert("不能输入空的标签名");
-            } else if (this.value) {
-                this.$emit("update:value", [...this.value, input]);
+            const name = window.prompt("请输入标签名");
+            if (name) {
+                const msg = tagListModel.create(name);
+                if (msg === "duplicated") {
+                    window.alert("标签已经存在了，请重新添加");
+                } else if (msg === "success") {
+                    window.alert("添加成功！");
+                }
             }
+
         }
 
     }
@@ -57,6 +64,8 @@
 
         > .current {
             display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
 
             > li {
                 > .add {

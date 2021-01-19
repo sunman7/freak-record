@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <Type :value="record.type" @update:value="updateType"/>
-        <Tag :value="record.tags" @update:value="updateTags"/>
+        <Tag :value="tags" @update:value="updateTags"/>
         <FormItem file-name="备注" placeholder="记得在这儿输入备注哦~" :value="record.note" @update:value="updateNote"/>
         <NumberPad :value="record.amount" @update:value="updateAmount" @confirm="saveRecord"/>
     </div>
@@ -51,9 +51,7 @@
         }
 
         saveRecord() {
-            const deepClone: RecordType = recordListModel.clone(this.record);
-            deepClone.createTime = new Date();
-            this.recordList.push(deepClone);
+            recordListModel.create(this.record);
         }
 
         @Watch("recordList")
