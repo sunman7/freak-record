@@ -14,8 +14,6 @@
     import FormItem from "@/components/FormItem.vue";
     import Type from "@/components/Type.vue";
     import Tag from "@/components/Tag.vue";
-    import recordListModel from "@/model/recordListModel";
-    import tagListModel from "@/model/tagListModel";
 
 
     localStorage.setItem("version", "0.0.1");
@@ -24,7 +22,8 @@
         components: {Tag, Type, FormItem, NumberPad}
     })
     export default class Record extends Vue {
-        tags = tagListModel.init();
+        tags = window.tagList;
+        recordList = window.recordList;
         record: RecordType = {
             tags: [],
             note: "",
@@ -32,8 +31,6 @@
             amount: 0,
             createTime: new Date(),
         };
-        recordList = recordListModel.init();
-
         updateTags(tags: string[]) {
             this.record.tags = tags;
         }
@@ -51,12 +48,7 @@
         }
 
         saveRecord() {
-            recordListModel.create(this.record);
-        }
-
-        @Watch("recordList")
-        onRecordListChanged() {
-            recordListModel.save(this.recordList);
+            window.createRecord(this.record);
         }
 
     }
