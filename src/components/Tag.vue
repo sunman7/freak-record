@@ -19,7 +19,6 @@
 <script lang="ts">
     import Vue from "vue";
     import {Component, Prop} from "vue-property-decorator";
-    import newId from "@/lib/newId";
     import tagListModel from "@/model/tagListModel";
 
 
@@ -68,6 +67,7 @@
             justify-content: flex-start;
 
             > li {
+                margin-top: 10px;
                 > .add {
                     background: $orange;
                     width: 90px;
