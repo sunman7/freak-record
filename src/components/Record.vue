@@ -9,11 +9,12 @@
 
 <script lang="ts">
     import Vue from "vue";
-    import {Component, Watch} from "vue-property-decorator";
+    import {Component} from "vue-property-decorator";
     import NumberPad from "@/components/NumberPad.vue";
     import FormItem from "@/components/FormItem.vue";
     import Type from "@/components/Type.vue";
     import Tag from "@/components/Tag.vue";
+    import store from "@/store/index2";
 
 
     localStorage.setItem("version", "0.0.1");
@@ -22,8 +23,8 @@
         components: {Tag, Type, FormItem, NumberPad}
     })
     export default class Record extends Vue {
-        tags = window.tagList;
-        recordList = window.recordList;
+        tags = store.tagList;
+        recordList = store.recordList;
         record: RecordType = {
             tags: [],
             note: "",
@@ -31,6 +32,7 @@
             amount: 0,
             createTime: new Date(),
         };
+
         updateTags(tags: string[]) {
             this.record.tags = tags;
         }
@@ -48,7 +50,7 @@
         }
 
         saveRecord() {
-            window.createRecord(this.record);
+            store.createRecord(this.record);
         }
 
     }

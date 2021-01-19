@@ -16,12 +16,13 @@
     import {Component} from "vue-property-decorator";
     import FormItem from "@/components/FormItem.vue";
     import Button from "@/components/Button.vue";
+    import store from "@/store/index2";
 
     @Component({
         components: {Button, FormItem}
     })
     export default class EditLabel extends Vue {
-        tag = window.findTag(this.$route.params.id);
+        tag = store.findTag(this.$route.params.id);
 
 
         created() {
@@ -32,13 +33,13 @@
 
         updateTag(name: string) {
             if (this.tag) {
-                window.updateTag(this.tag.id, name);
+                store.updateTag(this.tag.id, name);
             }
         }
 
         remove() {
             if (this.tag) {
-                if (window.removeTag(this.tag.id)) {
+                if (store.removeTag(this.tag.id)) {
                     window.alert("删除成功");
                     this.$router.back();
                 } else {
