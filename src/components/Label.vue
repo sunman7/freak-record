@@ -23,10 +23,10 @@
         components: {Button},
     })
     export default class Label extends mixins(TagHelper) {
+
         get tags() {
             return this.$store.state.tagList;
         }
-
         beforeCreated() {
             this.$store.commit("initTags");
         }

@@ -27,8 +27,8 @@
         }
 
         created() {
+            this.$store.commit("initTags");
             this.$store.commit("setCurrentTag", this.$route.params.id);
-
             if (!this.tag) {
                 this.$router.replace("/404");
             }
@@ -43,12 +43,7 @@
         remove() {
             if (this.tag) {
                 this.$store.commit("removeTag", this.tag.id);
-                // if () {
-                //     window.alert("删除成功");
-                //     this.$router.back();
-                // } else {
-                //     window.alert("删除失败");
-                // }
+
             }
         }
 

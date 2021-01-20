@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import clone from "@/lib/clone";
 import newId from "@/lib/newId";
+import router from "@/router";
 
 Vue.use(Vuex);
 const recordKeyName = "recordList";
@@ -50,28 +51,36 @@ const store = new Vuex.Store({
         },
         removeTag(state, id: string) {
             let index = -1;
-            for (let i = 0; i < this.tagList.length; i++) {
+            for (let i = 0; i < state.tagList.length; i++) {
                 if (state.tagList[i].id === id) {
                     index = i;
                     break;
                 }
             }
-            state.tagList.splice(index, 1);
-            store.commit("saveTags");
+            if (index >= 0) {
+                state.tagList.splice(index, 1);
+                window.alert("删除成功");
+                store.commit("saveTags");
+                router.back();
+            } else {
+                window.alert("删除失败");
+            }
+
         },
         updateTag(state, {id, newName}) {
             const idList = state.tagList.map(item => item.id);
             if (idList.indexOf(id) >= 0) {
                 const names = state.tagList.map(item => item.name);
-                if (names.indexOf(name) < 0) {
-                    const tag = state.tagList.filter(item => item.id === id)[0];
-                    tag.name = newName;
-                    store.commit("saveTags");
+                if (names.indexOf(name) >= 0) {
+                    window.alert("标签名重复了");
                 }
+                const tag = state.tagList.filter(item => item.id === id)[0];
+                tag.name = newName;
+                store.commit("saveTags");
             }
         },
-        saveTags() {
-            window.localStorage.setItem(tagKeyName, JSON.stringify(this.tagList));
+        saveTags(state) {
+            window.localStorage.setItem(tagKeyName, JSON.stringify(state.tagList));
         }
     },
     actions: {},
