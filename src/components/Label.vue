@@ -21,14 +21,15 @@
 
     @Component({
         components: {Button},
-        computed: {
-            tags() {
-                return this.$store.commit("initTags");
-            }
-        }
     })
     export default class Label extends mixins(TagHelper) {
+        get tags() {
+            return this.$store.state.tagList;
+        }
 
+        beforeCreated() {
+            this.$store.commit("initTags");
+        }
     }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
     <section class="tags">
         <ol class="current">
-            <li v-for="tag in tagList" :key="tag.id" @click="select(tag.id)"
+            <li v-for="tag in tags" :key="tag.id" @click="select(tag.id)"
                 :class="selectedTags.indexOf(tag.id) >= 0 && 'selected'">
                 <div class="icon-wrapper">
                     {{tag.name}}
@@ -17,20 +17,19 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
     import {Component} from "vue-property-decorator";
     import {mixins} from "vue-class-component";
     import {TagHelper} from "@/mixins/TagMethod";
 
 
-    @Component({
-        computed: {
-            tagList() {
-                return this.$store.commit("initTagList");
-            }
-        }
-    })
+    @Component
     export default class Tag extends mixins(TagHelper) {
+        get tags() {
+            return this.$store.state.tagList;
+        }
+        beforeCreated() {
+            this.$store.commit("initTags");
+        }
 
         selectedTags: string[] = [];
 

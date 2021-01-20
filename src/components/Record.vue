@@ -20,16 +20,14 @@
 
     @Component({
         components: {Tag, Type, FormItem, NumberPad},
-        computed: {
-            recordList() {
-                return this.$store.commit("initRecords");
-            },
-            tags() {
-                return this.$store.commit("initTag");
-            }
-        }
     })
     export default class Record extends Vue {
+        get recordList() {
+            return this.$store.state.recordList;
+        }
+        get tags() {
+            return this.$store.state.tagList;
+        }
         record: RecordType = {
             tags: [],
             note: "",
@@ -37,8 +35,10 @@
             amount: 0,
             createTime: new Date(),
         };
+
         created() {
-            console.log("computed内容");
+            this.$store.commit("initRecords");
+            this.$store.commit("initTags");
         }
 
         updateTags(tags: string[]) {
