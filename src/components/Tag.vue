@@ -1,14 +1,14 @@
 <template>
     <section class="tags">
         <ol class="current">
-            <li v-for="tag in value" :key="tag.id" @click="select(tag.id)"
+            <li v-for="tag in tagList" :key="tag.id" @click="select(tag.id)"
                 :class="selectedTags.indexOf(tag.id) >= 0 && 'selected'">
                 <div class="icon-wrapper">
                     {{tag.name}}
                 </div>
             </li>
             <li>
-                <button class="add" @click="create">新增</button>
+                <button class="add" @click="createTag">新增</button>
             </li>
         </ol>
 
@@ -18,13 +18,20 @@
 
 <script lang="ts">
     import Vue from "vue";
-    import {Component, Prop} from "vue-property-decorator";
-    import tagStore from "@/store/tagStore";
+    import {Component} from "vue-property-decorator";
+    import {mixins} from "vue-class-component";
+    import {TagHelper} from "@/mixins/TagMethod";
 
 
-    @Component
-    export default class Tag extends Vue {
-        @Prop() readonly value: { id: string; name: string }[] | undefined;
+    @Component({
+        computed: {
+            tagList() {
+                return this.$store.commit("initTagList");
+            }
+        }
+    })
+    export default class Tag extends mixins(TagHelper) {
+
         selectedTags: string[] = [];
 
         select(tag: string) {
@@ -36,18 +43,6 @@
             }
         }
 
-        create() {
-            const name = window.prompt("请输入标签名");
-            if (name) {
-                const msg = tagStore.createTag(name);
-                if (msg === "duplicated") {
-                    window.alert("标签已经存在了，请重新添加");
-                } else if (msg === "success") {
-                    window.alert("添加成功！");
-                }
-            }
-
-        }
 
     }
 </script>
@@ -65,6 +60,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: flex-start;
+            overflow: auto;
 
             > li {
                 margin-top: 10px;

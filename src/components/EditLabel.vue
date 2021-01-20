@@ -16,16 +16,19 @@
     import {Component} from "vue-property-decorator";
     import FormItem from "@/components/FormItem.vue";
     import Button from "@/components/Button.vue";
-    import store from "@/store/index2";
 
     @Component({
-        components: {Button, FormItem}
+        components: {Button, FormItem},
+
     })
     export default class EditLabel extends Vue {
-        tag = store.findTag(this.$route.params.id);
-
+        get tag() {
+            return this.$store.state.currentTag;
+        }
 
         created() {
+            this.$store.commit("setCurrentTag", this.$route.params.id);
+
             if (!this.tag) {
                 this.$router.replace("/404");
             }
@@ -33,18 +36,19 @@
 
         updateTag(name: string) {
             if (this.tag) {
-                store.updateTag(this.tag.id, name);
+                this.$store.commit("updateTag", {id: this.tag.id, name});
             }
         }
 
         remove() {
             if (this.tag) {
-                if (store.removeTag(this.tag.id)) {
-                    window.alert("删除成功");
-                    this.$router.back();
-                } else {
-                    window.alert("删除失败");
-                }
+                this.$store.commit("removeTag", this.tag.id);
+                // if () {
+                //     window.alert("删除成功");
+                //     this.$router.back();
+                // } else {
+                //     window.alert("删除失败");
+                // }
             }
         }
 

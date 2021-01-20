@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <Type :value="record.type" @update:value="updateType"/>
-        <Tag :value="tags" @update:value="updateTags"/>
+        <Tag/>
         <FormItem file-name="备注" placeholder="记得在这儿输入备注哦~" :value="record.note" @update:value="updateNote"/>
         <NumberPad :value="record.amount" @update:value="updateAmount" @confirm="saveRecord"/>
     </div>
@@ -14,17 +14,22 @@
     import FormItem from "@/components/FormItem.vue";
     import Type from "@/components/Type.vue";
     import Tag from "@/components/Tag.vue";
-    import store from "@/store/index2";
 
 
     localStorage.setItem("version", "0.0.1");
 
     @Component({
-        components: {Tag, Type, FormItem, NumberPad}
+        components: {Tag, Type, FormItem, NumberPad},
+        computed: {
+            recordList() {
+                return this.$store.commit("initRecords");
+            },
+            tags() {
+                return this.$store.commit("initTag");
+            }
+        }
     })
     export default class Record extends Vue {
-        tags = store.tagList;
-        recordList = store.recordList;
         record: RecordType = {
             tags: [],
             note: "",
@@ -32,6 +37,9 @@
             amount: 0,
             createTime: new Date(),
         };
+        created() {
+            console.log("computed内容");
+        }
 
         updateTags(tags: string[]) {
             this.record.tags = tags;
@@ -50,7 +58,7 @@
         }
 
         saveRecord() {
-            store.createRecord(this.record);
+            this.$store.commit("createRecord", this.record);
         }
 
     }
