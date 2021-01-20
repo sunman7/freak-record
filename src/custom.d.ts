@@ -3,7 +3,7 @@ type RecordType = {
     note: string;
     type: string;
     amount: number;
-    createTime: Date;
+    createTime?: string;
 
 }
 type Tag = {

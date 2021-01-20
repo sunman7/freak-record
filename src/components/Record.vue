@@ -38,7 +38,7 @@
             note: "",
             type: "-",
             amount: 0,
-            createTime: new Date(),
+            createTime: new Date().toISOString(),
         };
         recordTypeList = [{text: "收入", value: "+"}, {text: "支出", value: "-"}];
 
