@@ -1,6 +1,6 @@
 <template>
     <Layout>
-        <Tabs :class-prefix="types" :data-source="recordTypeList" :value.sync="y"/>
+        <Tabs :class-prefix="types" :data-source="recordTypeList" :value.sync="type"/>
     </Layout>
 </template>
 
@@ -13,14 +13,49 @@
         components: {Tabs}
     })
     export default class Statistic extends Vue {
-        recordTypeList = [{text: "收入", value: "+"}, {text: "支出", value: "-"}];
-        y = "-";
+        recordTypeList = [{text: "支出", value: "-"}, {text: "收入", value: "+"}];
+        type = "-";
         types = "types";
     }
 </script>
 
 <style lang="scss" scoped>
-    ::v-deep .types-item {
-        background: white;
+    @import "~@/style/helper.scss";
+
+    ::v-deep .tabs-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        > .types-tabs {
+            font-size: 14px;
+
+            > .types-item {
+                &:first-child {
+                    border-radius: 6px 0 0 6px;
+                }
+
+                &:last-child {
+                    border-radius: 0 6px 6px 0;
+                }
+
+                border: 1px solid black;
+                padding: 4px;
+                line-height: 20px;
+
+                &.selected {
+                    background: #000;
+                    color: $orange;
+
+                    ::after {
+                        display: none;
+                    }
+                }
+
+            }
+        }
+
+
     }
+
 </style>

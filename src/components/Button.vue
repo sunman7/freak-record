@@ -16,14 +16,15 @@
 </script>
 
 <style lang="scss" scoped>
-
-
+    @import "~@/style/helper.scss";
     .button {
-        background: black;
-        border-radius: 4px;
+        background: $orange;
+        border-radius: 6px;
         border: none;
-        padding: 16px;
+        padding: 10px;
         margin: 44-16px;
+        text-align: center;
+        box-shadow: $box-shadow;
     }
 
 </style>
