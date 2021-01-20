@@ -16,7 +16,7 @@
     import {Component} from "vue-property-decorator";
     import Button from "@/components/Button.vue";
     import {mixins} from "vue-class-component";
-    import {TagHelper} from "@/mixins/TagMethod";
+    import {TagHelper} from "@/mixins/TagHelper";
 
 
     @Component({

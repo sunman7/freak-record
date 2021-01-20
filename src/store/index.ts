@@ -44,10 +44,12 @@ const store = new Vuex.Store({
             const names = state.tagList.map(tag => tag.name);
             if (names.indexOf(name) >= 0) {
                 window.alert("标签名重复了");
+            } else {
+                state.tagList.push({id: newId().toString(), name: name});
+                store.commit("saveTags");
+                window.alert("添加成功");
             }
-            state.tagList.push({id: newId().toString(), name: name});
-            store.commit("saveTags");
-            window.alert("添加成功");
+
         },
         removeTag(state, id: string) {
             let index = -1;
