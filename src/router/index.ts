@@ -4,7 +4,6 @@ import Record from "@/components/Record.vue";
 import Label from "@/components/Label.vue";
 import Statistic from "@/components/Statistic.vue";
 import NotFound from "@/components/NotFound.vue";
-import NewTag from "@/components/EditLabel.vue";
 import EditLabel from "@/components/EditLabel.vue";
 
 Vue.use(VueRouter);
@@ -12,7 +11,7 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
     {
         path: "/",
-        component: Statistic
+        redirect: "/statistic"
     },
     {
         path: "/record",
@@ -36,7 +35,7 @@ const routes: Array<RouteConfig> = [
 ];
 
 const router = new VueRouter({
-    routes
+    routes,
 });
 
 export default router;

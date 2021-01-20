@@ -1,5 +1,8 @@
 <template>
     <div class="wrapper">
+        <router-link to="/">
+            <Icon class="back" name="left"/>
+        </router-link>
         <Type :value="record.type" @update:value="updateType"/>
         <Tag/>
         <FormItem file-name="备注" placeholder="记得在这儿输入备注哦~" :value="record.note" @update:value="updateNote"/>
@@ -25,9 +28,11 @@
         get recordList() {
             return this.$store.state.recordList;
         }
+
         get tags() {
             return this.$store.state.tagList;
         }
+
         record: RecordType = {
             tags: [],
             note: "",
@@ -69,6 +74,14 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+
+    }
+
+    .back {
+        background: transparent;
+        position: absolute;
+        top: 16px;
+        left: 10px;
 
     }
 </style>

@@ -32,7 +32,7 @@
     nav {
         box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.15);
         background: white;
-        color: $orange;
+        color: $black;
         display: flex;
         font-size: 14px;
 
@@ -48,14 +48,14 @@
             .icon {
                 height: 24px;
                 width: 24px;
-                fill: $orange;
+                fill: $black;
             }
 
             &.selected {
-                color: darken($orange,35%);
+                color: darken($orange, 10%);
 
                 .icon {
-                    fill: darken($orange,30%);
+                    fill: darken($orange, 10%);
                 }
             }
         }
