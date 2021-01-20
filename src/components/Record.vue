@@ -3,7 +3,7 @@
         <router-link to="/">
             <Icon class="back" name="left"/>
         </router-link>
-        <Type :value="record.type" @update:value="updateType"/>
+        <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
         <Tag/>
         <FormItem file-name="备注" placeholder="记得在这儿输入备注哦~" :value="record.note" @update:value="updateNote"/>
         <NumberPad :value="record.amount" @update:value="updateAmount" @confirm="saveRecord"/>
@@ -15,14 +15,14 @@
     import {Component} from "vue-property-decorator";
     import NumberPad from "@/components/NumberPad.vue";
     import FormItem from "@/components/FormItem.vue";
-    import Type from "@/components/Type.vue";
     import Tag from "@/components/Tag.vue";
+    import Tabs from "@/components/Tabs.vue";
 
 
     localStorage.setItem("version", "0.0.1");
 
     @Component({
-        components: {Tag, Type, FormItem, NumberPad},
+        components: {Tabs, Tag, FormItem, NumberPad},
     })
     export default class Record extends Vue {
         get recordList() {
@@ -40,6 +40,7 @@
             amount: 0,
             createTime: new Date(),
         };
+        recordTypeList = [{text: "收入", value: "+"}, {text: "支出", value: "-"}];
 
         created() {
             this.$store.commit("initRecords");
