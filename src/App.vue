@@ -12,9 +12,10 @@
         -moz-osx-font-smoothing: grayscale;
         font-family: $font-hei;
         line-height: 1.5;
-        color: #333;
+        color: #2c3e50;
         font-size: 16px;
         background: white;
+
     }
 
     .clearfix::after {

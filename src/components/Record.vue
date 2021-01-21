@@ -4,7 +4,7 @@
             <Icon class="back" name="left"/>
         </router-link>
         <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
-        <Tag/>
+        <Tag @update:value="updateSelectTag"/>
         <FormItem file-name="备注" placeholder="记得在这儿输入备注哦~" :value="record.note" @update:value="updateNote"/>
         <NumberPad :value="record.amount" @update:value="updateAmount" @confirm="saveRecord"/>
     </div>
@@ -34,7 +34,7 @@
         }
 
         record: RecordType = {
-            tags: [],
+            tagId: {id:"",name:""},
             note: "",
             type: "-",
             amount: 0,
@@ -42,14 +42,16 @@
         };
         recordTypeList = [{text: "收入", value: "+"}, {text: "支出", value: "-"}];
 
+
         created() {
             this.$store.commit("initRecords");
             this.$store.commit("initTags");
         }
 
-        updateTags(tags: string[]) {
-            this.record.tags = tags;
+        updateSelectTag(tagId: TagType) {
+            this.record.tagId = tagId;
         }
+
 
         updateNote(note: string) {
             this.record.note = note;
@@ -59,9 +61,6 @@
             this.record.amount = parseFloat(amount);
         }
 
-        updateType(type: string) {
-            this.record.type = type;
-        }
 
         saveRecord() {
             this.$store.commit("createRecord", this.record);

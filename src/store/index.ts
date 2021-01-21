@@ -9,8 +9,8 @@ const recordKeyName = "recordList";
 const tagKeyName = "tagList";
 type RootState = {
     recordList: RecordType[];
-    tagList: Tag[];
-    currentTag: Tag | undefined;
+    tagList: TagType[];
+    currentTag: TagType | undefined;
 }
 const store = new Vuex.Store({
     state: {

@@ -82,6 +82,7 @@
             text-align: right;
             background: white;
             box-shadow: $box-shadow;
+
         }
 
         .buttons {

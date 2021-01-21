@@ -2,11 +2,14 @@
     <Layout>
         <Tabs :class-prefix="types" :data-source="recordTypeList" :value.sync="type"/>
         <ol>
-            <li v-for="(group,index) in result" :key="index">
-                <h3 class="title">{{group.title}}</h3>
+            <li v-for="group in result" :key="group.title">
+                <h3 class="title">{{formatTime(group.title)}}</h3>
                 <ol>
                     <li v-for="item in group.items" :key="item.id" class="record">
-                        <span>{{parseTag(item.tags)}}<span class="notes">{{parseNote(item.note)}}</span></span>
+                        <div>
+                            <Icon :name="item.tagId.name"></Icon>
+                            <span>{{parseTag(item.tagId.name)}}</span><span
+                                class="notes">{{parseNote(item.note)}}</span></div>
                         <span>￥{{item.amount}}</span>
                     </li>
                 </ol>
@@ -19,6 +22,7 @@
     import Vue from "vue";
     import {Component} from "vue-property-decorator";
     import Tabs from "@/components/Tabs.vue";
+    import dayjs from "dayjs";
 
     @Component({
         components: {Tabs}
@@ -42,6 +46,27 @@
             return map;
         }
 
+        formatTime(string: string) {
+            const now = dayjs();
+            const day = dayjs(string);
+            if (day.isSame(now, "day")) {
+                return "今天";
+            } else if (day.isSame(now.subtract(1, "day"), "day")) {
+                return "昨天";
+            } else if (day.isSame(now.subtract(2, "day"), "day")) {
+                return "前天";
+            } else {
+                if (day.isSame(now, "year")) {
+                    return day.format("M月D日");
+                } else {
+                    return day.format("YYYY年M月D日");
+                }
+
+            }
+
+
+        }
+
         parseNote(note: string) {
             if (note === "") {
                 return "";
@@ -50,8 +75,9 @@
             }
         }
 
-        parseTag(tags: Tag[]) {
-            return tags.length === 0 ? "无" : tags.join(",");
+        parseTag(tag: string) {
+
+            return tag === undefined ? "无" : tag;
         }
 
         created() {
@@ -87,6 +113,12 @@
     }
 
     .record {
+
+        > div {
+            display: flex;
+            align-items: center;
+        }
+
         @extend %item
     }
 

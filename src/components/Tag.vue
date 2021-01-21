@@ -1,14 +1,20 @@
 <template>
     <section class="tags">
         <ol class="current">
-            <li v-for="tag in tags" :key="tag.id" @click="select(tag.id)"
-                :class="selectedTags.indexOf(tag.id) >= 0 && 'selected'">
+            <li v-for="tag in tags" :key="tag.id" @click="select(tag)"
+                :class="selectedTags.indexOf(tag) >= 0 && 'selected'">
                 <div class="icon-wrapper">
+                    <Icon :name="tag.name"/>
                     {{tag.name}}
                 </div>
             </li>
             <li>
-                <button class="add" @click="createTag">新增</button>
+                <div class="icon-wrapper">
+                    <button class="add" @click="createTag">
+                        <Icon name="add"/>
+                        新增
+                    </button>
+                </div>
             </li>
         </ol>
 
@@ -27,19 +33,22 @@
         get tags() {
             return this.$store.state.tagList;
         }
+
         beforeCreated() {
             this.$store.commit("initTags");
         }
 
-        selectedTags: string[] = [];
+        selectedTags: TagType[] = [];
 
-        select(tag: string) {
+        select(tag: TagType) {
             const index = this.selectedTags.indexOf(tag);
             if (index >= 0) {
                 this.selectedTags.splice(index, 1);
             } else {
+                this.selectedTags.pop();
                 this.selectedTags.push(tag);
             }
+            this.$emit("update:value", this.selectedTags[0]);
         }
 
 
@@ -52,46 +61,58 @@
     .tags {
         flex-grow: 1;
         overflow: auto;
-        background: #d9d9d9;
         padding: 16px;
+        font-size: 14px;
+        height: 30vh;
+        overflow: auto;
 
         > .current {
             display: flex;
             flex-wrap: wrap;
-            justify-content: flex-start;
-            overflow: auto;
+            align-items: start;
 
             > li {
-                margin-top: 10px;
+                margin-top: 16px;
+                width: 33.333333%;
+                height: 20%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
 
-                > .add {
-                    background: $orange;
-                    width: 90px;
-                    border: 1px solid #d3d3d3;
-                    border-radius: 12px;
-                    height: 50px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
 
                 > .icon-wrapper {
-                    background: $white;
-                    padding: 0 16px;
-                    margin-right: 12px;
-                    box-shadow: 1px 2px 2px #d3d3d3;
-                    width: 90px;
+                    width: 80%;
                     border: 1px solid #d3d3d3;
                     border-radius: 10px;
-                    height: 50px;
+                    height: 60px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    margin-bottom: 10px;
+                    display: flex;
+                    flex-direction: column;
+
+
+                    > .icon {
+                        margin-top: 2px;
+                        height: 50px;
+                        width: 50px;
+                    }
+
+                    > .add {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;
+                        border: none;
+                        background: inherit;
+                    }
                 }
+
 
                 &.selected {
                     .icon-wrapper {
-                        box-shadow: $box-shadow;
+                        box-shadow: 1px 2px 2px #d3d3d3;
                         color: $orange;
                     }
                 }
