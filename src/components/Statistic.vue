@@ -2,8 +2,11 @@
     <Layout>
         <Tabs :class-prefix="types" :data-source="recordTypeList" :value.sync="type"/>
         <ol>
-            <li v-for="group in result" :key="group.title">
-                <h3 class="title">{{formatTime(group.title)}}</h3>
+            <li v-for="group in groupList" :key="group.title">
+                <div>
+                    <h3 class="title">{{formatTime(group.title)}} <span>￥{{group.amount ? group.amount : 0}}</span></h3>
+
+                </div>
                 <ol>
                     <li v-for="item in group.items" :key="item.id" class="record">
                         <div>
@@ -23,32 +26,62 @@
     import {Component} from "vue-property-decorator";
     import Tabs from "@/components/Tabs.vue";
     import dayjs from "dayjs";
+    import clone from "@/lib/clone";
 
     @Component({
         components: {Tabs}
     })
     export default class Statistic extends Vue {
+        recordTypeList = [{text: "支出", value: "-"}, {text: "收入", value: "+"}];
+        type = "-";
+        types = "types";
+
         get recordList() {
             return this.$store.state.recordList;
         }
 
-        get result() {
+        get groupList() {
             const {recordList} = this;
-            type Items = RecordType[] //定义类型
-            type HashMapItem = { title: string; items: Items };//定义类型
 
-            const map: { [key: string]: HashMapItem } = {};
-            for (let i = 0; i < recordList.length; i++) {
-                const [date, time] = recordList[i].createTime.split("T");
-                map[date] = map[date] || {title: date, items: []};
-                map[date].items.push(recordList[i]);
+            type Group = {
+                title: string;
+                amount?: number;
+                items: RecordType[];
+            }[]
+            //排序
+            const newList = clone(recordList)
+                .filter(r => r.type === this.type)//通过类型筛选出支出还是收入
+                .sort((a: RecordType, b: RecordType) => dayjs(b.createTime).valueOf() - dayjs(a.createTime).valueOf());
+            //排序后的所有record
+            if (newList.length === 0) return [];
+            const group: Group = [{
+                title: dayjs(recordList[0].createTime).format("YYYY-MM-DD"),
+
+                items: [newList[0]]
+            }];
+            for (let i = 1; i < newList.length; i++) {
+                const current = newList[i]; // 当前record
+                const last = group[group.length - 1]; //分组中最后一项
+                if (dayjs(last.title).isSame(dayjs(current.createTime), "day")) {
+                    last.items.push(current);
+                } else {
+                    group.push({title: dayjs(current.createTime).format("YYYY-MM-DD"), items: current});
+                }
             }
-            return map;
+            group.map(g => {
+                g.amount = g.items.reduce(
+                    (sum, item) => {
+                        return sum + item.amount;
+                    }
+                    ,0);
+            });
+            return group;
         }
 
         formatTime(string: string) {
             const now = dayjs();
             const day = dayjs(string);
+
             if (day.isSame(now, "day")) {
                 return "今天";
             } else if (day.isSame(now.subtract(1, "day"), "day")) {
@@ -84,9 +117,6 @@
             this.$store.commit("initRecords");
         }
 
-        recordTypeList = [{text: "支出", value: "-"}, {text: "收入", value: "+"}];
-        type = "-";
-        types = "types";
     }
 </script>
 
@@ -109,6 +139,11 @@
 
     .title {
         background: #f5f5f5;
+
+        > span {
+            font-weight: bold;
+        }
+
         @extend %item
     }
 

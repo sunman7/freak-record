@@ -34,7 +34,7 @@
         }
 
         record: RecordType = {
-            tagId: {id:"",name:""},
+            tagId: undefined,
             note: "",
             type: "-",
             amount: 0,
@@ -63,7 +63,15 @@
 
 
         saveRecord() {
-            this.$store.commit("createRecord", this.record);
+            if(this.record.tagId === undefined){
+                window.alert("请选择一个标签");
+                return ;
+            }else{
+                this.record.note = "";
+                this.$store.commit("createRecord", this.record);
+                window.alert("记录成功");
+            }
+
         }
 
     }

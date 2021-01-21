@@ -1,5 +1,5 @@
 type RecordType = {
-    tagId: TagType;
+    tagId?: TagType;
     note: string;
     type: string;
     amount: number;
