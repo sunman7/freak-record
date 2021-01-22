@@ -1,5 +1,6 @@
 <template>
     <header>
+        <Icon name="left" @click.native="$router.replace('/record')"/>
         <slot/>
     </header>
 </template>
@@ -20,5 +21,15 @@
     header {
         background: $orange;
         height: 64px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        > svg{
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            top: 15px;
+            left: 6px;
+        }
     }
 </style>

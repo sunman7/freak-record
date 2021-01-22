@@ -5,6 +5,7 @@ import Label from "@/components/Label.vue";
 import NotFound from "@/components/NotFound.vue";
 import EditLabel from "@/components/EditLabel.vue";
 import Details from "@/components/Details.vue";
+import newTag from "@/components/newTag.vue";
 
 Vue.use(VueRouter);
 
@@ -15,8 +16,14 @@ const routes: Array<RouteConfig> = [
     },
     {
         path: "/record",
-        component: Record
-    }, {
+        component: Record,
+
+    },
+    {
+        path: "/newtag",
+        component: newTag
+    }
+    , {
         path: "/label",
         component: Label
     },

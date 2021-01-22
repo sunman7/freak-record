@@ -10,7 +10,7 @@
             </li>
             <li>
                 <div class="icon-wrapper">
-                    <button class="add" @click="createTag">
+                    <button class="add" @click="$router.push('/newtag')">
                         <Icon name="add"/>
                         新增
                     </button>
