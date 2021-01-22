@@ -63,13 +63,15 @@
 
 
         saveRecord() {
-            if(this.record.tagId === undefined){
+            if (this.record.tagId === undefined) {
                 window.alert("请选择一个标签");
-                return ;
-            }else{
-                this.record.note = "";
-                this.$store.commit("createRecord", this.record);
-                window.alert("记录成功");
+                return;
+            } else {
+                if (this.$store.state.createRecordError === null) {
+                    window.alert("记录成功");
+                    this.$store.commit("createRecord", this.record);
+                    this.record.note = "";
+                }
             }
 
         }
@@ -82,7 +84,6 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-
     }
 
     .back {

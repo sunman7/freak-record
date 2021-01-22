@@ -2,16 +2,16 @@ import Vue from "vue";
 import VueRouter, {RouteConfig} from "vue-router";
 import Record from "@/components/Record.vue";
 import Label from "@/components/Label.vue";
-import Statistic from "@/components/Statistic.vue";
 import NotFound from "@/components/NotFound.vue";
 import EditLabel from "@/components/EditLabel.vue";
+import Details from "@/components/Details.vue";
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
     {
         path: "/",
-        redirect: "/statistic"
+        redirect: "/details"
     },
     {
         path: "/record",
@@ -21,8 +21,8 @@ const routes: Array<RouteConfig> = [
         component: Label
     },
     {
-        path: "/statistic",
-        component: Statistic
+        path: "/details",
+        component: Details
     },
     {
         path: "/label/edit/:id",

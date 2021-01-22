@@ -20,8 +20,10 @@
     .button {
         background: $orange;
         border-radius: 6px;
+        font-weight: bold;
+        width: 60%;
         border: none;
-        padding: 10px;
+        padding: 5px 10px;
         margin: 44-16px;
         text-align: center;
         box-shadow: $box-shadow;
