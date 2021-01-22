@@ -1,5 +1,5 @@
 <template>
-    <button class="button"  >
+    <button class="button">
         <slot></slot>
     </button>
 
@@ -17,11 +17,15 @@
 
 <style lang="scss" scoped>
     @import "~@/style/helper.scss";
+
     .button {
         background: $orange;
-        border-radius: 6px;
+
         font-weight: bold;
-        width: 60%;
+        $h: 40px;
+        height: $h;
+        border-radius: $h/2;
+        width: 70%;
         border: none;
         padding: 5px 10px;
         margin: 44-16px;

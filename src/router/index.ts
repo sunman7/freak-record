@@ -1,11 +1,11 @@
 import Vue from "vue";
 import VueRouter, {RouteConfig} from "vue-router";
-import Record from "@/components/Record.vue";
+import Record from "@/views/Record.vue";
 import Label from "@/components/Label.vue";
 import NotFound from "@/components/NotFound.vue";
-import EditLabel from "@/components/EditLabel.vue";
-import Details from "@/components/Details.vue";
-import newTag from "@/components/newTag.vue";
+import EditLabel from "@/views/EditLabel.vue";
+import Details from "@/views/Details.vue";
+import newTag from "@/views/newTag.vue";
 
 Vue.use(VueRouter);
 
@@ -17,7 +17,6 @@ const routes: Array<RouteConfig> = [
     {
         path: "/record",
         component: Record,
-
     },
     {
         path: "/newtag",

@@ -1,9 +1,9 @@
 <template>
     <div class="wrapper">
-            <router-link to="/">
-                <Icon class="back" name="left"/>
-            </router-link>
-            <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
+
+        <button @click="$router.back()"><Icon class="back" name="left"/></button>
+
+        <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
         <Tag @update:value="updateSelectTag"/>
         <FormItem file-name="备注" placeholder="记得在这儿输入备注哦~" :value="record.note" @update:value="updateNote"/>
         <NumberPad :value="record.amount" @update:value="updateAmount" @confirm="saveRecord"/>
@@ -84,6 +84,9 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
+        > button{
+            border: none;
+        }
     }
 
     .back {

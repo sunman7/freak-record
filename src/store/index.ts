@@ -48,11 +48,9 @@ const store = new Vuex.Store({
             const names = state.tagList.map(tag => tag.name);
             if (names.indexOf(name) >= 0) {
                 state.createTagError = new Error("标签名重复了");
-                window.alert(state.createTagError.message);
             } else {
                 state.tagList.push({id: newId().toString(), name: name});
                 store.commit("saveTags");
-                window.alert("创建成功");
 
             }
 
@@ -67,9 +65,7 @@ const store = new Vuex.Store({
             }
             if (index >= 0) {
                 state.tagList.splice(index, 1);
-                window.alert("删除成功");
                 store.commit("saveTags");
-                router.back();
             } else {
                 window.alert("删除失败");
             }

@@ -1,7 +1,7 @@
 <template>
     <header>
-        <Icon name="left" @click.native="$router.replace('/record')"/>
-        <slot/>
+        <Icon name="left" @click.native="$router.back()"/>
+        <span><slot/></span>
     </header>
 </template>
 
@@ -19,7 +19,7 @@
     @import "~@/style/helper.scss";
 
     header {
-        background: $orange;
+        background: #f8f8f8;
         height: 64px;
         display: flex;
         justify-content: center;
@@ -30,6 +30,10 @@
             position: absolute;
             top: 15px;
             left: 6px;
+        }
+        > span{
+            font-size: 20px;
+            font-weight: bold;
         }
     }
 </style>

@@ -10,9 +10,17 @@
             </li>
             <li>
                 <div class="icon-wrapper">
-                    <button class="add" @click="$router.push('/newtag')">
+                    <button class="operate" @click="$router.push('/newtag')">
                         <Icon name="add"/>
                         新增
+                    </button>
+                </div>
+            </li>
+            <li>
+                <div class="icon-wrapper">
+                    <button class="operate" @click="$router.push('/label')">
+                        <Icon name="edit"/>
+                        编辑
                     </button>
                 </div>
             </li>
@@ -99,7 +107,7 @@
                         width: 50px;
                     }
 
-                    > .add {
+                    > .operate {
                         display: flex;
                         justify-content: center;
                         align-items: center;

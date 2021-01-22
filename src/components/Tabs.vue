@@ -36,7 +36,7 @@
     @import "~@/style/helper.scss";
 
     .tabs-wrapper {
-        background: $orange;
+        background: #f8f8f8;
         height: 64px;
         > .tabs {
             display: flex;
@@ -47,12 +47,13 @@
             > li {
                 width: 25%;
                 line-height: 64px;
+                color: black;
                 &.selected {
                     &::after {
                         content: "";
                         display: block;
-                        height: 2px;
-                        background: #000;
+                        height: 4px;
+                        background: $orange;
                         margin-top: -10px;
                     }
                 }

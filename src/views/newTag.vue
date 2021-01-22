@@ -1,7 +1,7 @@
 <template>
     <div>
         <Header>
-            <span class="label">新建标签</span>
+            新建标签
         </Header>
         <div>
             <p>图标</p>
@@ -31,6 +31,7 @@
     import Button from "@/components/Button.vue";
     import Header from "@/components/Header.vue";
     import readAllSvg from "@/lib/readAllSvg";
+    import router from "@/router";
 
     @Component({
         components: {Header, Button, FormItem},
@@ -61,6 +62,8 @@
             } else {
                 if (this.$store.state.createTagError === null) {
                     this.$store.commit("createTag", this.selectedTags[0]);
+                    window.alert("添加标签成功！");
+                    router.back();
                 }
             }
         }
@@ -78,10 +81,6 @@
         font-weight: bold;
         font-size: 20px;
         border-bottom: 1px solid grey;
-    }
-
-    .label {
-        font-size: 20px;
     }
 
 
@@ -129,7 +128,7 @@
                         width: 50px;
                     }
 
-                    > .add {
+                    > .operate {
                         display: flex;
                         justify-content: center;
                         align-items: center;

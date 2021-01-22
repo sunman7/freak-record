@@ -178,15 +178,17 @@
                     border-radius: 0 6px 6px 0;
                 }
 
-                border: 1px solid black;
+                color: $orange;
+                border: 1px solid $orange;
                 padding: 4px;
                 line-height: 20px;
+                font-weight: bold;
 
                 &.selected {
-                    background: #000;
-                    color: $orange;
+                    background: $orange;
+                    color: white;
 
-                    ::after {
+                    &::after {
                         display: none;
                     }
                 }
