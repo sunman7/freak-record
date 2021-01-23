@@ -58,10 +58,13 @@
         }
 
         confirm() {
-            this.$emit("update:value", parseFloat(this.output));
-            this.$emit("confirm", parseFloat(this.output));
-            this.output = "0";
-
+            if (this.output === "0") {
+                return window.alert("请输入金额~");
+            } else {
+                this.$emit("update:value", parseFloat(this.output));
+                this.$emit("confirm", parseFloat(this.output));
+                this.output = "0";
+            }
         }
 
         clear() {

@@ -1,27 +1,12 @@
 <template>
     <Layout>
         <Tabs :class-prefix="types" :data-source="recordTypeList" :value.sync="type"/>
-        <Chart :options="x"/>
-        <ol v-if="groupList.length > 0">
-            <li v-for="group in groupList" :key="group.title">
-                <div>
-                    <h3 class="title">{{formatTime(group.title)}} <span>￥{{group.amount ? group.amount : 0}}</span></h3>
-
-                </div>
-                <ol>
-                    <li v-for="item in group.items" :key="item.id" class="record">
-                        <div>
-                            <Icon :name="item.tagId.name"></Icon>
-                            <span>{{parseTag(item.tagId.name)}}</span><span
-                                class="notes">{{parseNote(item.note)}}</span></div>
-                        <span>￥{{item.amount}}</span>
-                    </li>
-                </ol>
-            </li>
-        </ol>
+        <FormItem file-name="日期" :value.sync="date" type="date"/>
+        <Chart :options="chartOptions" v-if="this.groupList.length > 0"/>
         <div v-else>
             <NoRecord/>
         </div>
+
     </Layout>
 </template>
 
@@ -29,33 +14,61 @@
     import Vue from "vue";
     import {Component} from "vue-property-decorator";
     import Tabs from "@/components/Tabs.vue";
-    import dayjs from "dayjs";
     import clone from "@/lib/clone";
     import NoRecord from "@/components/NoRecord.vue";
     import Button from "@/components/Button.vue";
     import Chart from "@/components/Chart.vue";
+    import FormItem from "@/components/FormItem.vue";
+    import _ from "lodash";
 
     @Component({
-        components: {Chart, NoRecord, Button, Tabs}
+        components: {FormItem, Chart, NoRecord, Button, Tabs}
     })
     export default class Details extends Vue {
         recordTypeList: { text: string; value: string }[] = [{text: "支出", value: "-"}, {text: "收入", value: "+"}];
         type = "-";
         types = "types";
+        date = new Date().toISOString();
 
-        get x() {
+        get chartOptions() {
+            const result = this.groupList.map(r => _.pick(r, ["name", "value"]));
+            const names = result.map(r => _.pick(["name"]));
             return {
-                xAxis: {
-                    type: "category",
-                    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+                title: {
+                    left: "center"
                 },
-                yAxis: {
-                    type: "value"
+                tooltip: {
+                    trigger: "item"
                 },
-                series: [{
-                    data: [150, 230, 224, 218, 135, 147, 260],
-                    type: "line"
-                }]
+                legend: {
+                    orient: "vertical",
+                    left: "left",
+                },
+                series: [
+                    {
+                        name: names,
+                        type: "pie",
+                        radius: "50%",
+                        data: result,
+                        color: [ // 颜色，按循序使用
+                            "#faa41b",
+                            "#fc6961",
+                            "#fc4190",
+                            "#7c9473",
+                            "#d6b0b1",
+                            "#8b5e83",
+                            "#ff7b54",
+                            "#11698e"
+                        ],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: "rgba(0, 0, 0, 0.5)"
+                            }
+                        }
+                    }
+                ]
             };
         }
 
@@ -67,32 +80,31 @@
             const {recordList} = this;
 
             type Group = {
-                title: string;
-                amount?: number;
+                name: string;
+                value?: number;
                 items: RecordType[];
             }[]
             //排序
             const newList = clone<RecordType[]>(recordList)
-                .filter(r => r.type === this.type)//通过类型筛选出支出还是收入
-                .sort((a: RecordType, b: RecordType) => dayjs(b.createTime).valueOf() - dayjs(a.createTime).valueOf());
+                .filter(r => r.type === this.type && r.createTime === this.date.split("T")[0])//通过类型筛选出支出还是收入
+                .sort((a, b) => a.tag.name.localeCompare(b.tag.name));
             //排序后的所有record
             if (newList.length === 0) return [];
             const group: Group = [{
-                title: dayjs(recordList[0].createTime).format("YYYY-MM-DD"),
-
+                name: newList[0].tag.name,
                 items: [newList[0]]
             }];
             for (let i = 1; i < newList.length; i++) {
                 const current = newList[i]; // 当前record
                 const last = group[group.length - 1]; //分组中最后一项
-                if (dayjs(last.title).isSame(dayjs(current.createTime), "day")) {
+                if (!last.name.localeCompare(current.tag.name)) {
                     last.items.push(current);
                 } else {
-                    group.push({title: dayjs(current.createTime).format("YYYY-MM-DD"), items: [current]});
+                    group.push({name: current.tag.name, items: [current]});
                 }
             }
             group.map(g => {
-                g.amount = g.items.reduce(
+                g.value = g.items.reduce(
                     (sum, item) => {
                         return sum + item.amount;
                     }
@@ -101,27 +113,6 @@
             return group;
         }
 
-        formatTime(string: string) {
-            const now = dayjs();
-            const day = dayjs(string);
-
-            if (day.isSame(now, "day")) {
-                return "今天";
-            } else if (day.isSame(now.subtract(1, "day"), "day")) {
-                return "昨天";
-            } else if (day.isSame(now.subtract(2, "day"), "day")) {
-                return "前天";
-            } else {
-                if (day.isSame(now, "year")) {
-                    return day.format("M月D日");
-                } else {
-                    return day.format("YYYY年M月D日");
-                }
-
-            }
-
-
-        }
 
         parseNote(note: string) {
             if (note === "") {

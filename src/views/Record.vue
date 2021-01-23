@@ -1,11 +1,13 @@
 <template>
     <div class="wrapper">
 
-        <button @click="$router.back()"><Icon class="back" name="left"/></button>
+        <button @click="$router.back()">
+            <Icon class="back" name="left"/>
+        </button>
 
         <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
         <Tag @update:value="updateSelectTag"/>
-        <FormItem class="date" file-name="日期" placeholder="记得在这儿输入日期哦~" type="date" :value.sync="record.createTime" />
+        <FormItem class="date" file-name="日期" placeholder="记得在这儿输入日期哦~" type="date" :value.sync="record.createTime"/>
         <FormItem file-name="备注" placeholder="记得在这儿输入备注哦~" :value="record.note" @update:value="updateNote"/>
         <NumberPad :value="record.amount" @update:value="updateAmount" @confirm="saveRecord"/>
     </div>
@@ -18,7 +20,7 @@
     import FormItem from "@/components/FormItem.vue";
     import Tag from "@/components/Tag.vue";
     import Tabs from "@/components/Tabs.vue";
-    import dayjs from 'dayjs';
+    import dayjs from "dayjs";
 
 
     localStorage.setItem("version", "0.0.1");
@@ -36,13 +38,13 @@
         }
 
         record: RecordType = {
-            tagId: undefined,
+            tag: {id:"",name:""},
             note: "",
             type: "-",
             amount: 0,
             createTime: dayjs(new Date().toISOString()).format("YYYY-MM-DD"),
         };
-        recordTypeList = [ {text: "支出", value: "-"},{text: "收入", value: "+"}];
+        recordTypeList = [{text: "支出", value: "-"}, {text: "收入", value: "+"}];
 
 
         created() {
@@ -50,8 +52,8 @@
             this.$store.commit("initTags");
         }
 
-        updateSelectTag(tagId: TagType) {
-            this.record.tagId = tagId;
+        updateSelectTag(tag: TagType) {
+            this.record.tag = tag;
         }
 
 
@@ -65,7 +67,7 @@
 
 
         saveRecord() {
-            if (this.record.tagId === undefined) {
+            if (this.record.tag === undefined) {
                 window.alert("请选择一个标签");
                 return;
             } else {
@@ -85,11 +87,13 @@
     .date {
         margin-bottom: 4px;
     }
+
     .wrapper {
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-        > button{
+
+        > button {
             border: none;
         }
     }

@@ -16,7 +16,6 @@
         chart?: any;
 
         mounted() {
-            console.log(this.options);
             if (this.options === undefined) {
                 return console.error("options为空");
             }
@@ -35,7 +34,7 @@
 
 <style lang="scss" scoped>
     .wrapper {
-        height: 40vh;
-        width: 100%;
+        height: 400px;
+        width: 375px;
     }
 </style>

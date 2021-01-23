@@ -6,7 +6,7 @@ type RootState = {
     createTagError: Error | null;
 }
 type RecordType = {
-    tagId?: TagType;
+    tag: TagType;
     note: string;
     type: string;
     amount: number;

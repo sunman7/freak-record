@@ -3,7 +3,7 @@
     <section class="note">
         <label class="name">{{fileName}}</label>
         <template v-if="type === 'date'">
-            <input :type="type || 'text'" :value="x(value)" @input="onValueChanged($event.target.value)"
+            <input :type="type || 'text'" :value="formatDate(value)" @input="onValueChanged($event.target.value)"
                    :placeholder="placeholder" >
         </template>
         <template v-else>
@@ -29,7 +29,7 @@
         onValueChanged(val: string) {
             this.$emit("update:value", val);
         }
-        x(isoString: string){
+        formatDate(isoString: string){
             return dayjs(isoString).format("YYYY-MM-DD");
         }
     }
