@@ -5,6 +5,7 @@
 
         <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
         <Tag @update:value="updateSelectTag"/>
+        <FormItem class="date" file-name="日期" placeholder="记得在这儿输入日期哦~" type="date" :value.sync="record.createTime" />
         <FormItem file-name="备注" placeholder="记得在这儿输入备注哦~" :value="record.note" @update:value="updateNote"/>
         <NumberPad :value="record.amount" @update:value="updateAmount" @confirm="saveRecord"/>
     </div>
@@ -17,6 +18,7 @@
     import FormItem from "@/components/FormItem.vue";
     import Tag from "@/components/Tag.vue";
     import Tabs from "@/components/Tabs.vue";
+    import dayjs from 'dayjs';
 
 
     localStorage.setItem("version", "0.0.1");
@@ -38,9 +40,9 @@
             note: "",
             type: "-",
             amount: 0,
-            createTime: new Date().toISOString(),
+            createTime: dayjs(new Date().toISOString()).format("YYYY-MM-DD"),
         };
-        recordTypeList = [{text: "收入", value: "+"}, {text: "支出", value: "-"}];
+        recordTypeList = [ {text: "支出", value: "-"},{text: "收入", value: "+"}];
 
 
         created() {
@@ -80,6 +82,9 @@
 </script>
 
 <style lang="scss" scoped>
+    .date {
+        margin-bottom: 4px;
+    }
     .wrapper {
         display: flex;
         flex-direction: column;

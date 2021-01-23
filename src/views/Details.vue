@@ -1,6 +1,7 @@
 <template>
     <Layout>
         <Tabs :class-prefix="types" :data-source="recordTypeList" :value.sync="type"/>
+        <Chart :options="x"/>
         <ol v-if="groupList.length > 0">
             <li v-for="group in groupList" :key="group.title">
                 <div>
@@ -18,9 +19,9 @@
                 </ol>
             </li>
         </ol>
-    <div v-else>
-        <NoRecord />
-    </div>
+        <div v-else>
+            <NoRecord/>
+        </div>
     </Layout>
 </template>
 
@@ -32,14 +33,31 @@
     import clone from "@/lib/clone";
     import NoRecord from "@/components/NoRecord.vue";
     import Button from "@/components/Button.vue";
+    import Chart from "@/components/Chart.vue";
 
     @Component({
-        components: {NoRecord, Button, Tabs}
+        components: {Chart, NoRecord, Button, Tabs}
     })
-    export default class Statistic extends Vue {
+    export default class Details extends Vue {
         recordTypeList: { text: string; value: string }[] = [{text: "支出", value: "-"}, {text: "收入", value: "+"}];
         type = "-";
         types = "types";
+
+        get x() {
+            return {
+                xAxis: {
+                    type: "category",
+                    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+                },
+                yAxis: {
+                    type: "value"
+                },
+                series: [{
+                    data: [150, 230, 224, 218, 135, 147, 260],
+                    type: "line"
+                }]
+            };
+        }
 
         get recordList() {
             return this.$store.state.recordList;

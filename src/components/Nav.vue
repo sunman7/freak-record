@@ -8,9 +8,9 @@
             <Icon name="record"></Icon>
             记账
         </router-link>
-        <router-link to="/label" class="item" active-class="selected">
+        <router-link to="/stat" class="item" active-class="selected">
             <Icon name="label"></Icon>
-            标签
+            统计
         </router-link>
     </nav>
 </template>

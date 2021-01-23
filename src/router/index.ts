@@ -3,9 +3,9 @@ import VueRouter, {RouteConfig} from "vue-router";
 import Record from "@/views/Record.vue";
 import Label from "@/components/Label.vue";
 import NotFound from "@/components/NotFound.vue";
-import EditLabel from "@/views/EditLabel.vue";
 import Details from "@/views/Details.vue";
 import newTag from "@/views/newTag.vue";
+import Statistic from "@/views/Statistic.vue";
 
 Vue.use(VueRouter);
 
@@ -31,8 +31,8 @@ const routes: Array<RouteConfig> = [
         component: Details
     },
     {
-        path: "/label/edit/:id",
-        component: EditLabel
+        path: "/stat",
+        component: Statistic
     },
     {
         path: "*",

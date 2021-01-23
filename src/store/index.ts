@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import clone from "@/lib/clone";
 import newId from "@/lib/newId";
 import router from "@/router";
+import dayjs from 'dayjs';
 
 Vue.use(Vuex);
 const recordKeyName = "recordList";
@@ -22,7 +23,7 @@ const store = new Vuex.Store({
         },
         createRecord(state, record: RecordType) {
             const deepClone: RecordType = clone(record);
-            deepClone.createTime = new Date().toISOString();
+            deepClone.createTime = deepClone.createTime || dayjs(new Date().toISOString()).format("YYYY-MM-DD");
             state.recordList.push(deepClone);
             store.commit("saveRecords");
         },
