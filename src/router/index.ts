@@ -3,9 +3,9 @@ import VueRouter, {RouteConfig} from "vue-router";
 import Record from "@/views/Record.vue";
 import Label from "@/components/Label.vue";
 import NotFound from "@/components/NotFound.vue";
-import Details from "@/views/Details.vue";
-import newTag from "@/views/newTag.vue";
 import Statistic from "@/views/Statistic.vue";
+import newTag from "@/views/newTag.vue";
+import Detail from "@/views/Detail.vue";
 
 Vue.use(VueRouter);
 
@@ -28,7 +28,7 @@ const routes: Array<RouteConfig> = [
     },
     {
         path: "/details",
-        component: Details
+        component: Detail
     },
     {
         path: "/stat",

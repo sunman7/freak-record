@@ -38,7 +38,7 @@
         }
 
         record: RecordType = {
-            tag: {id:"",name:""},
+            tag: {id: "", name: ""},
             note: "",
             type: "-",
             amount: 0,
@@ -67,7 +67,7 @@
 
 
         saveRecord() {
-            if (this.record.tag === undefined) {
+            if (this.record.tag.id === "" || this.record.tag.name === "") {
                 window.alert("请选择一个标签");
                 return;
             } else {
