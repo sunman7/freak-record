@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import clone from "@/lib/clone";
 import newId from "@/lib/newId";
 import router from "@/router";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 
 Vue.use(Vuex);
 const recordKeyName = "recordList";
@@ -39,7 +39,6 @@ const store = new Vuex.Store({
                 store.commit("createTag", "娱乐");
                 store.commit("createTag", "移动支付");
                 store.commit("createTag", "米面");
-                store.commit("createTag", "香烟");
             }
         },
         findTag(state, id: string) {
