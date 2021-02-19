@@ -60,7 +60,6 @@
         line-height: 64px;
 
         > .icon {
-            background: transparent;
             position: absolute;
             top: 16px;
             left: 10px;

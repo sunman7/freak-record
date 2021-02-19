@@ -52,6 +52,7 @@
             this.$store.commit("initTags");
         }
 
+
         updateSelectTag(tag: TagType) {
             this.record.tag = tag;
         }
@@ -71,11 +72,9 @@
                 window.alert("请选择一个标签");
                 return;
             } else {
-                if (this.$store.state.createRecordError === null) {
-                    window.alert("记录成功");
-                    this.$store.commit("createRecord", this.record);
-                    this.record.note = "";
-                }
+                window.alert("记录成功");
+                this.$store.commit("createRecord", this.record);
+                this.record.note = "";
             }
 
         }

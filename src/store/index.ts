@@ -35,11 +35,6 @@ const store = new Vuex.Store({
         },
         initTags(state) {
             state.tagList = JSON.parse(window.localStorage.getItem(tagKeyName) || "[]");
-            if (!state.tagList || state.tagList.length === 0) {
-                store.commit("createTag", "娱乐");
-                store.commit("createTag", "移动支付");
-                store.commit("createTag", "米面");
-            }
         },
         findTag(state, id: string) {
             return state.tagList.filter(t => t.id === id)[0];
@@ -48,10 +43,11 @@ const store = new Vuex.Store({
             const names = state.tagList.map(tag => tag.name);
             if (names.indexOf(name) >= 0) {
                 state.createTagError = new Error("标签名重复了");
+                window.alert("标签重复~");
             } else {
                 state.tagList.push({id: newId().toString(), name: name});
                 store.commit("saveTags");
-
+                window.alert("添加成功~");
             }
 
         },

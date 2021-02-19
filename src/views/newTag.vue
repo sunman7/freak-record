@@ -60,11 +60,8 @@
                 window.alert("请选择一个标签");
                 return;
             } else {
-                if (this.$store.state.createTagError === null) {
-                    this.$store.commit("createTag", this.selectedTags[0]);
-                    window.alert("添加标签成功！");
-                    router.back();
-                }
+                this.$store.commit("createTag", this.selectedTags[0]);
+                router.back();
             }
         }
 
