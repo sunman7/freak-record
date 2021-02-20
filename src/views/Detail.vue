@@ -61,14 +61,13 @@
             //排序后的所有record
             if (newList.length === 0) return [];
             const group: Group = [{
-                title: dayjs(recordList[0].createTime).format("YYYY-MM-DD"),
-
+                title: dayjs(newList[0].createTime).format("YYYY-MM-DD"),
                 items: [newList[0]]
             }];
             for (let i = 1; i < newList.length; i++) {
                 const current = newList[i]; // 当前record
                 const last = group[group.length - 1]; //分组中最后一项
-                if (dayjs(last.title).isSame(dayjs(current.createTime), "day")) {
+                if (last.title === current.createTime) {
                     last.items.push(current);
                 } else {
                     group.push({title: dayjs(current.createTime).format("YYYY-MM-DD"), items: [current]});
@@ -126,6 +125,7 @@
 
 <style lang="scss" scoped>
     @import "~@/style/helper.scss";
+
     %item {
         padding: 4px 16px;
         min-height: 40px;
